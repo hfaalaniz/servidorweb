@@ -67,16 +67,17 @@ publish/
 Compilar y publicar manualmente
 Bash# Clonar el repositorio
 git clone https://github.com/tu-usuario/EnhancedStaticWebServer.git
-cd EnhancedStaticWebServer
 
 # (Recomendado) Usar .NET 8.0
 # Edita EnhancedStaticWebServer.csproj y asegúrate de tener <TargetFramework>net8.0</TargetFramework>
 
 # Publicar como ejecutable único para Windows x64
 
+## Ingresar al directorio de la aplicacion:
+cd EnhancedStaticWebServer
+## Publicar con el siguiente comando
 dotnet publish -c Release -r win-x64 --self-contained true/p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
-
-El ejecutable quedará en:
+## El ejecutable quedará en:
 bin\Release\net8.0\win-x64\publish\EnhancedStaticWebServer.exe
 
 # Ejemplo de uso con tu proyecto de Tracking
