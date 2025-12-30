@@ -74,7 +74,7 @@ cd EnhancedStaticWebServer
 
 # Publicar como ejecutable único para Windows x64
 
-dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+dotnet publish -c Release -r win-x64 --self-contained true/p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
 
 El ejecutable quedará en:
 bin\Release\net8.0\win-x64\publish\EnhancedStaticWebServer.exe
