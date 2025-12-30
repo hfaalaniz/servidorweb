@@ -87,9 +87,9 @@ Coloca toda la carpeta de tu proyecto web en miframe.
 Todos los componentes (button.js, card.js, modal.js, toast.js, tracking.js, etc.) se cargan correctamente.
 Conexión a Supabase funciona sin problemas.
 
-Licencia
+## Licencia
 MIT License – siéntete libre de usar, modificar y distribuir.
-Autor
-Fabian Alaniz – Diciembre 2025
+## Autor
+## Fabian Alaniz – Diciembre 2025
 ¡Disfruta de tu servidor web estático portable! 🚀#   s e r v i d o r _ w e b 
  
