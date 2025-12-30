@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Demo Completo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #00D4AA;
+            --primary-dark: #00B894;
+            --secondary: #6C5CE7;
+            --dark: #2D3436;
+            --darker: #1A1D1F;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #1A1D1F 0%, #2D3436 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00D4AA 0%, #6C5CE7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-section {
+            margin-bottom: 3rem;
+        }
+        
+        .demo-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            color: #00D4AA;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="demo-header">
+            <h1><i class="fas fa-cube"></i> Framework Demo Completo</h1>
+            <p style="color: #636E72; font-size: 1.1rem;">
+                Demostración interactiva de todos los componentes
+            </p>
+        </div>
+
+        <!-- CARDS SECTION -->
+        <div class="demo-section">
+            <h2><i class="fas fa-th-large"></i> Cards con Glassmorphism</h2>
+            
+            <div class="demo-grid" id="cards-container"></div>
+            
+            <button class="btn btn-primary btn-md" onclick="addDynamicCard()">
+                <i class="fas fa-plus"></i>
+                <span>Agregar Card Dinámica</span>
+            </button>
+        </div>
+
+        <!-- BUTTONS SECTION -->
+        <div class="demo-section">
+            <h2><i class="fas fa-hand-pointer"></i> Botones Interactivos</h2>
+            
+            <div class="demo-buttons">
+                <button class="btn btn-primary btn-md" onclick="showSuccessToast()">
+                    <i class="fas fa-check"></i>
+                    <span>Toast Success</span>
+                </button>
+                
+                <button class="btn btn-error btn-md" onclick="showErrorToast()">
+                    <i class="fas fa-times"></i>
+                    <span>Toast Error</span>
+                </button>
+                
+                <button class="btn btn-warning btn-md" onclick="showWarningToast()">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Toast Warning</span>
+                </button>
+                
+                <button class="btn btn-info btn-md" onclick="showInfoToast()">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Toast Info</span>
+                </button>
+                
+                <button class="btn btn-secondary btn-md" onclick="showConfirmToast()">
+                    <i class="fas fa-question"></i>
+                    <span>Toast Confirm</span>
+                </button>
+                
+                <button class="btn btn-success btn-md" onclick="showPromiseToast()">
+                    <i class="fas fa-spinner"></i>
+                    <span>Toast Promise</span>
+                </button>
+            </div>
+
+            <div class="demo-buttons">
+                <button class="btn btn-outline-primary btn-md" onclick="showSimpleModal()">
+                    <i class="fas fa-window-maximize"></i>
+                    <span>Modal Simple</span>
+                </button>
+                
+                <button class="btn btn-outline-secondary btn-md" onclick="showModalWithImage()">
+                    <i class="fas fa-image"></i>
+                    <span>Modal con Imagen</span>
+                </button>
+                
+                <button class="btn btn-outline-warning btn-md" onclick="showConfirmModal()">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Modal Confirm</span>
+                </button>
+                
+                <button class="btn btn-outline-error btn-md" onclick="showAlertModal()">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Modal Alert</span>
+                </button>
+                
+                <button class="btn btn-outline-info btn-md" onclick="showLoadingModal()">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>Modal Loading</span>
+                </button>
+                
+                <button class="btn btn-outline-success btn-md" onclick="showStepsModal()">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Modal Steps</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="demo-section">
+            <h2><i class="fas fa-chart-line"></i> Cards de Estadísticas</h2>
+            
+            <div class="demo-grid" id="stats-container"></div>
+        </div>
+
+        <!-- PROFILE CARDS -->
+        <div class="demo-section">
+            <h2><i class="fas fa-users"></i> Cards de Perfil</h2>
+            
+            <div class="demo-grid" id="profiles-container"></div>
+        </div>
+
+        <!-- TOAST POSITIONS TEST -->
+        <div class="demo-section">
+            <h2><i class="fas fa-map-marker-alt"></i> Posiciones de Toast</h2>
+            
+            <div class="demo-buttons">
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('top-left')">Top Left</button>
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('top-center')">Top Center</button>
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('top-right')">Top Right</button>
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('bottom-left')">Bottom Left</button>
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('bottom-center')">Bottom Center</button>
+                <button class="btn btn-ghost-primary btn-sm" onclick="testToastPosition('bottom-right')">Bottom Right</button>
+            </div>
+        </div>
+
+        <!-- UTILITIES SHOWCASE -->
+        <div class="demo-section">
+            <h2><i class="fas fa-palette"></i> Utilidades CSS</h2>
+            
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <div class="glass p-4 rounded-xl">
+                    <p class="text-primary font-bold">Glassmorphism</p>
+                    <p class="text-sm text-light">backdrop-filter: blur(20px)</p>
+                </div>
+                
+                <div class="bg-gradient-primary p-4 rounded-xl">
+                    <p class="font-bold">Gradiente Primary</p>
+                    <p class="text-sm opacity-75">Linear gradient</p>
+                </div>
+                
+                <div class="bg-gradient-secondary p-4 rounded-xl">
+                    <p class="font-bold">Gradiente Secondary</p>
+                    <p class="text-sm opacity-75">Linear gradient</p>
+                </div>
+                
+                <div class="glass-light p-4 rounded-2xl shadow-primary">
+                    <p class="text-white font-semibold">Glass Light + Shadow</p>
+                    <p class="text-xs text-gray">Combinación de efectos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts del Framework -->
+    <script>
+        // Simular variables CSS en JS
+        const vars = `
+            :root {
+                --color-primary: #00D4AA;
+                --color-primary-dark: #00B894;
+                --color-secondary: #6C5CE7;
+                --color-success: #00B894;
+                --color-error: #FF7675;
+                --color-warning: #FDCB6E;
+                --color-info: #6C5CE7;
+                --color-dark: #2D3436;
+                --color-darker: #1A1D1F;
+                --color-white: #FFFFFF;
+                --color-gray-400: #B2BEC3;
+                --color-gray-600: #636E72;
+                --color-gray-700: #495057;
+                
+                --gradient-primary: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+                --gradient-secondary: linear-gradient(135deg, #6C5CE7 0%, #5F3DC4 100%);
+                --gradient-success: linear-gradient(135deg, #00B894 0%, #00A378 100%);
+                --gradient-error: linear-gradient(135deg, #FF7675 0%, #D63031 100%);
+                --gradient-warning: linear-gradient(135deg, #FDCB6E 0%, #E17055 100%);
+                --gradient-dark: linear-gradient(135deg, #1A1D1F 0%, #2D3436 100%);
+                
+                --glass-bg: rgba(255, 255, 255, 0.05);
+                --glass-bg-light: rgba(255, 255, 255, 0.1);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --glass-border-light: rgba(255, 255, 255, 0.2);
+                --glass-blur: blur(20px);
+                
+                --shadow-primary: 0 4px 12px rgba(0, 212, 170, 0.3);
+                --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+                
+                --space-1: 0.25rem;
+                --space-2: 0.5rem;
+                --space-3: 0.75rem;
+                --space-4: 1rem;
+                --space-6: 1.5rem;
+                
+                --radius-lg: 0.75rem;
+                --radius-xl: 1rem;
+                --radius-2xl: 1.25rem;
+                --radius-full: 9999px;
+                
+                --font-primary: 'DM Sans', sans-serif;
+                --font-heading: 'Syne', sans-serif;
+                --font-size-sm: 0.875rem;
+                --font-size-base: 1rem;
+                --font-size-lg: 1.125rem;
+                --font-size-xl: 1.25rem;
+                --font-weight-semibold: 600;
+                --font-weight-bold: 700;
+                
+                --transition-base: all 0.3s ease;
+                
+                --z-index-toast: 1080;
+                --z-index-modal: 1050;
+            }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = vars;
+        document.head.appendChild(style);
+    </script>
+    
+    <script src="Button.js"></script>
+    <script src="Card.js"></script>
+    <script src="Toast.js"></script>
+    <script src="Modal.js"></script>
+    
+    <script>
+        // ==========================================
+        // INICIALIZACIÓN DE CARDS
+        // ==========================================
+        
+        function initCards() {
+            const container = document.getElementById('cards-container');
+            
+            // Card básica con glassmorphism
+            const card1 = cardComponent.create({
+                title: '<i class="fas fa-rocket"></i> Card Básica',
+                subtitle: 'Con efecto glassmorphism',
+                body: '<p>Esta es una card con efecto de vidrio esmerilado. El backdrop-filter crea el efecto de desenfoque.</p>',
+                hover: true
+            });
+            container.appendChild(card1);
+            
+            // Card con variante de color
+            const card2 = cardComponent.create({
+                title: 'Card Primary',
+                body: '<p>Card con variante de color primary. Los bordes y el fondo tienen el color del tema.</p>',
+                variant: 'primary',
+                hover: true,
+                glow: true
+            });
+            container.appendChild(card2);
+            
+            // Card con gradiente
+            const card3 = cardComponent.create({
+                title: '<i class="fas fa-fire"></i> Card con Gradiente',
+                body: '<p>Esta card usa un gradiente completo como fondo, perfecto para destacar contenido importante.</p>',
+                variant: 'secondary',
+                gradient: true,
+                hover: true
+            });
+            container.appendChild(card3);
+            
+            // Card con badge
+            const card4 = cardComponent.create({
+                title: 'Card con Badge',
+                body: '<p>Las cards pueden tener badges para mostrar información adicional como "Nuevo", "Destacado", etc.</p>',
+                badge: { text: 'NUEVO', variant: 'success' },
+                hover: true
+            });
+            container.appendChild(card4);
+        }
+        
+        function initStatsCards() {
+            const container = document.getElementById('stats-container');
+            
+            const stat1 = cardComponent.createStats({
+                icon: 'fas fa-users',
+                value: '2,543',
+                label: 'Usuarios',
+                variant: 'primary',
+                trend: 12.5
+            });
+            container.appendChild(stat1);
+            
+            const stat2 = cardComponent.createStats({
+                icon: 'fas fa-chart-line',
+                value: '$45.2K',
+                label: 'Ingresos',
+                variant: 'success',
+                trend: 8.3
+            });
+            container.appendChild(stat2);
+            
+            const stat3 = cardComponent.createStats({
+                icon: 'fas fa-box',
+                value: '1,234',
+                label: 'Productos',
+                variant: 'secondary',
+                trend: -2.1
+            });
+            container.appendChild(stat3);
+            
+            const stat4 = cardComponent.createStats({
+                icon: 'fas fa-star',
+                value: '4.8',
+                label: 'Rating',
+                variant: 'warning',
+                trend: 0.5
+            });
+            container.appendChild(stat4);
+        }
+        
+        function initProfileCards() {
+            const container = document.getElementById('profiles-container');
+            
+            const profiles = [
+                {
+                    name: 'Ana García',
+                    role: 'Desarrolladora Full Stack',
+                    bio: 'Apasionada por crear experiencias web increíbles'
+                },
+                {
+                    name: 'Carlos López',
+                    role: 'Diseñador UX/UI',
+                    bio: 'Creando interfaces intuitivas y hermosas'
+                },
+                {
+                    name: 'María Rodríguez',
+                    role: 'Project Manager',
+                    bio: 'Liderando equipos hacia el éxito'
+                }
+            ];
+            
+            profiles.forEach(profile => {
+                const actions = [
+                    btnComponent.create({
+                        text: 'Ver Perfil',
+                        variant: 'primary',
+                        size: 'sm',
+                        onClick: () => toast.info('Perfil de ' + profile.name)
+                    }),
+                    btnComponent.create({
+                        text: 'Mensaje',
+                        variant: 'secondary',
+                        type: 'outline',
+                        size: 'sm',
+                        onClick: () => toast.info('Enviar mensaje a ' + profile.name)
+                    })
+                ];
+                
+                const card = cardComponent.createProfile({
+                    name: profile.name,
+                    role: profile.role,
+                    bio: profile.bio,
+                    actions
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // ==========================================
+        // TOAST FUNCTIONS
+        // ==========================================
+        
+        function showSuccessToast() {
+            toast.success('Operación completada exitosamente', '¡Éxito!');
+        }
+        
+        function showErrorToast() {
+            toast.error('No se pudo completar la operación', 'Error');
+        }
+        
+        function showWarningToast() {
+            toast.warning('Esta acción requiere confirmación', 'Advertencia');
+        }
+        
+        function showInfoToast() {
+            toast.info('Nueva actualización disponible', 'Información');
+        }
+        
+        function showConfirmToast() {
+            toast.confirm({
+                title: '¿Continuar?',
+                message: '¿Estás seguro de que deseas realizar esta acción?',
+                onConfirm: () => toast.success('Confirmado'),
+                onCancel: () => toast.info('Cancelado')
+            });
+        }
+        
+        function showPromiseToast() {
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    Math.random() > 0.3 ? resolve() : reject();
+                }, 2000);
+            });
+            
+            toast.promise(promise, {
+                loading: 'Procesando...',
+                success: '¡Completado!',
+                error: 'Falló la operación'
+            });
+        }
+        
+        function testToastPosition(position) {
+            toast.info(`Toast en ${position}`, 'Posición', 3000, { position });
+        }
+        
+        // ==========================================
+        // MODAL FUNCTIONS
+        // ==========================================
+        
+        function showSimpleModal() {
+            modal.open({
+                title: 'Modal Simple',
+                subtitle: 'Este es un modal básico',
+                body: `
+                    <p>Este es el contenido del modal. Puedes incluir cualquier HTML aquí.</p>
+                    <p style="margin-top: 1rem;">El modal tiene efectos de glassmorphism y animaciones suaves.</p>
+                `,
+                footer: [
+                    btnComponent.create({
+                        text: 'Cerrar',
+                        variant: 'secondary',
+                        type: 'outline',
+                        size: 'md',
+                        onClick: function() { modal.close(this.closest('.modal-overlay')); }
+                    }),
+                    btnComponent.create({
+                        text: 'Aceptar',
+                        variant: 'primary',
+                        size: 'md',
+                        onClick: function() {
+                            toast.success('¡Modal aceptado!');
+                            modal.close(this.closest('.modal-overlay'));
+                        }
+                    })
+                ],
+                size: 'md',
+                variant: 'primary',
+                icon: 'fas fa-info-circle'
+            });
+        }
+        
+        function showModalWithImage() {
+            modal.open({
+                title: 'Modal con Imagen',
+                image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=300&fit=crop',
+                body: `
+                    <p>Este modal incluye una imagen en la parte superior.</p>
+                    <p style="margin-top: 1rem;">Perfecto para galerías o contenido visual.</p>
+                `,
+                size: 'lg',
+                variant: 'secondary'
+            });
+        }
+        
+        function showConfirmModal() {
+            modal.confirm({
+                title: '¿Eliminar elemento?',
+                message: 'Esta acción no se puede deshacer. ¿Estás seguro de que deseas continuar?',
+                confirmText: 'Sí, eliminar',
+                cancelText: 'Cancelar',
+                variant: 'error',
+                onConfirm: () => toast.success('Elemento eliminado'),
+                onCancel: () => toast.info('Acción cancelada')
+            });
+        }
+        
+        function showAlertModal() {
+            modal.alert({
+                title: 'Información Importante',
+                message: 'Tu sesión expirará en 5 minutos. Guarda tu trabajo.',
+                variant: 'warning',
+                buttonText: 'Entendido',
+                onClose: () => toast.info('Alerta cerrada')
+            });
+        }
+        
+        function showLoadingModal() {
+            const loadingModal = modal.loading('Procesando datos...');
+            
+            setTimeout(() => {
+                modal.close(loadingModal);
+                toast.success('¡Proceso completado!');
+            }, 3000);
+        }
+        
+        function showStepsModal() {
+            const steps = ['Paso 1', 'Paso 2', 'Paso 3', 'Paso 4'];
+            let currentStep = 0;
+            
+            function openStepModal() {
+                const nextBtn = btnComponent.create({
+                    text: currentStep === steps.length - 1 ? 'Finalizar' : 'Siguiente',
+                    variant: 'primary',
+                    size: 'md',
+                    onClick: function() {
+                        if (currentStep < steps.length - 1) {
+                            currentStep++;
+                            modal.close(this.closest('.modal-overlay'));
+                            openStepModal();
+                        } else {
+                            modal.close(this.closest('.modal-overlay'));
+                            toast.success('¡Wizard completado!');
+                            currentStep = 0;
+                        }
+                    }
+                });
+                
+                const backBtn = currentStep > 0 ? btnComponent.create({
+                    text: 'Atrás',
+                    variant: 'secondary',
+                    type: 'outline',
+                    size: 'md',
+                    onClick: function() {
+                        currentStep--;
+                        modal.close(this.closest('.modal-overlay'));
+                        openStepModal();
+                    }
+                }) : null;
+                
+                modal.open({
+                    title: `Modal con Steps - ${steps[currentStep]}`,
+                    body: `
+                        <p>Este es el contenido del ${steps[currentStep]}.</p>
+                        <p style="margin-top: 1rem;">Los pasos se muestran en la parte superior del modal.</p>
+                    `,
+                    footer: backBtn ? [backBtn, nextBtn] : [nextBtn],
+                    steps: steps,
+                    currentStep: currentStep,
+                    size: 'md',
+                    variant: 'info'
+                });
+            }
+            
+            openStepModal();
+        }
+        
+        // ==========================================
+        // DYNAMIC CARD
+        // ==========================================
+        
+        function addDynamicCard() {
+            const container = document.getElementById('cards-container');
+            
+            const variants = ['primary', 'secondary', 'success', 'warning', 'info'];
+            const titles = ['Nueva Card', 'Card Dinámica', 'Card Creada', 'Card JS'];
+            const icons = ['fas fa-star', 'fas fa-bolt', 'fas fa-fire', 'fas fa-gem'];
+            
+            const randomVariant = variants[Math.floor(Math.random() * variants.length)];
+            const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            const deleteBtn = btnComponent.create({
+                text: '',
+                icon: 'fas fa-trash',
+                variant: 'error',
+                size: 'sm',
+                type: 'ghost',
+                onClick: function() {
+                    const card = this.closest('.card');
+                    card.style.animation = 'toast-slide-out 0.3s ease forwards';
+                    setTimeout(() => card.remove(), 300);
+                    toast.info('Card eliminada');
+                }
+            });
+            
+            const card = cardComponent.create({
+                title: `<i class="${randomIcon}"></i> ${randomTitle}`,
+                body: '<p>Esta card fue creada dinámicamente con JavaScript usando el método create() del componente Card.</p>',
+                variant: randomVariant,
+                hover: true,
+                glow: true,
+                actions: [deleteBtn]
+            });
+            
+            container.appendChild(card);
+            toast.success('Card agregada');
+        }
+        
+        // ==========================================
+        // INICIALIZAR TODO
+        // ==========================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initCards();
+            initStatsCards();
+            initProfileCards();
+            
+            // Mostrar toast de bienvenida
+            setTimeout(() => {
+                toast.success('Framework cargado correctamente', '¡Bienvenido!', 4000);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

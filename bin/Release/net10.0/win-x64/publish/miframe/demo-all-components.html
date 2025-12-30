@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Personal - Demo Completa</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Framework -->
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="utilities.css">
+    <link rel="stylesheet" href="dropdown.css">
+    <link rel="stylesheet" href="tabs.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="sidebar.css">
+    
+    <style>
+        .demo-section {
+            padding: var(--space-12) 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .demo-title {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--space-2);
+        }
+        
+        .demo-description {
+            color: var(--color-gray-400);
+            margin-bottom: var(--space-8);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .demo-buttons-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            align-items: center;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding-top: 80px;
+            transition: margin-left var(--duration-base) var(--ease-out);
+        }
+        
+        .sidebar--collapsed ~ .main-content {
+            margin-left: 80px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar--transparent" data-navbar>
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <div class="navbar-brand__logo" style="background: var(--gradient-primary);"></div>
+                <span class="navbar-brand__text">Framework</span>
+            </a>
+
+            <ul class="navbar-menu" data-navbar-menu data-open="false">
+                <li class="navbar-item">
+                    <a href="#buttons" class="navbar-link" data-navbar-link>Buttons</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="#cards" class="navbar-link" data-navbar-link>Cards</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="#modals" class="navbar-link" data-navbar-link>Modals</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="#dropdown" class="navbar-link" data-navbar-link>Dropdown</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="#tabs" class="navbar-link" data-navbar-link>Tabs</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="#table" class="navbar-link" data-navbar-link>Tables</a>
+                </li>
+            </ul>
+
+            <div class="navbar-actions">
+                <div class="navbar-user">
+                    <img src="https://i.pravatar.cc/150?img=12" alt="User" class="navbar-user__avatar">
+                    <span class="navbar-user__name">Usuario</span>
+                    <svg class="navbar-user__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
+            </div>
+
+            <button class="navbar-toggle" data-navbar-toggle aria-label="Toggle menu" aria-expanded="false">
+                <span class="navbar-toggle__line"></span>
+                <span class="navbar-toggle__line"></span>
+                <span class="navbar-toggle__line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <div class="sidebar-brand__logo" style="background: var(--gradient-primary);"></div>
+                <span class="sidebar-brand__text">Framework</span>
+            </a>
+            <button class="sidebar-close" data-sidebar-close aria-label="Close sidebar">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section__title">Componentes</div>
+                    <ul>
+                        <li class="sidebar-item">
+                            <a href="#buttons" class="sidebar-link">
+                                <i class="fas fa-hand-pointer sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Buttons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#cards" class="sidebar-link">
+                                <i class="fas fa-rectangle-ad sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Cards</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#modals" class="sidebar-link">
+                                <i class="fas fa-window-restore sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Modals & Dialogs</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#dropdown" class="sidebar-link">
+                                <i class="fas fa-caret-down sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Dropdown</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#tabs" class="sidebar-link">
+                                <i class="fas fa-folder sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Tabs</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#table" class="sidebar-link">
+                                <i class="fas fa-table sidebar-link__icon"></i>
+                                <span class="sidebar-link__text">Tables</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <img src="https://i.pravatar.cc/150?img=12" alt="User" class="sidebar-user__avatar">
+                <div class="sidebar-user__info">
+                    <div class="sidebar-user__name">John Doe</div>
+                    <div class="sidebar-user__role">Developer</div>
+                </div>
+                <svg class="sidebar-user__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </div>
+        </div>
+    </aside>
+
+    <button class="sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar">
+        <svg class="sidebar-toggle__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+        </svg>
+    </button>
+
+    <div class="sidebar-overlay" data-sidebar-overlay></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- BUTTONS SECTION -->
+            <section id="buttons" class="demo-section">
+                <h2 class="demo-title">Button Component</h2>
+                <p class="demo-description">Botones con múltiples variantes, tamaños y estados</p>
+                
+                <h3 class="mb-4">Variantes Solid</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-error">Error</button>
+                    <button class="btn btn-warning">Warning</button>
+                    <button class="btn btn-info">Info</button>
+                    <button class="btn btn-dark">Dark</button>
+                </div>
+
+                <h3 class="mb-4">Variantes Outline</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-outline-primary">Primary</button>
+                    <button class="btn btn-outline-secondary">Secondary</button>
+                    <button class="btn btn-outline-success">Success</button>
+                    <button class="btn btn-outline-error">Error</button>
+                </div>
+
+                <h3 class="mb-4">Variantes Ghost</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-ghost-primary">Ghost Primary</button>
+                    <button class="btn btn-ghost-secondary">Ghost Secondary</button>
+                    <button class="btn btn-ghost-success">Ghost Success</button>
+                </div>
+
+                <h3 class="mb-4">Tamaños</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary btn-sm">Small</button>
+                    <button class="btn btn-primary btn-md">Medium</button>
+                    <button class="btn btn-primary btn-lg">Large</button>
+                    <button class="btn btn-primary btn-xl">Extra Large</button>
+                </div>
+
+                <h3 class="mb-4">Con Iconos</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        <span>Descargar</span>
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-check"></i>
+                        <span>Guardar</span>
+                    </button>
+                    <button class="btn btn-error">
+                        <i class="fas fa-trash"></i>
+                        <span>Eliminar</span>
+                    </button>
+                    <button class="btn btn-primary btn-icon-only">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <h3 class="mb-4">Estados Especiales</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary loading">Loading</button>
+                    <button class="btn btn-secondary" disabled>Disabled</button>
+                    <button class="btn btn-primary btn-block" style="max-width: 400px;">Full Width</button>
+                </div>
+
+                <h3 class="mb-4">Ejemplos Interactivos</h3>
+                <div class="demo-buttons-grid">
+                    <button class="btn btn-primary" onclick="toast.success('¡Operación exitosa!', '¡Éxito!')">
+                        <i class="fas fa-check"></i> Mostrar Toast
+                    </button>
+                    <button class="btn btn-secondary" onclick="modal.alert({title: 'Información', message: 'Este es un mensaje de prueba', variant: 'info'})">
+                        <i class="fas fa-info-circle"></i> Mostrar Modal
+                    </button>
+                    <button class="btn btn-warning" onclick="msgBox.confirm('¿Estás seguro de realizar esta acción?', '¿Confirmar?')">
+                        <i class="fas fa-question-circle"></i> Confirmar
+                    </button>
+                    <button class="btn btn-success" onclick="inputBox.text('¿Cuál es tu nombre?', 'Escribe tu nombre...').then(r => r && toast.info(`Hola ${r.value}!`))">
+                        <i class="fas fa-keyboard"></i> Input Box
+                    </button>
+                </div>
+            </section>
+
+            <!-- CARDS SECTION -->
+            <section id="cards" class="demo-section">
+                <h2 class="demo-title">Card Component</h2>
+                <p class="demo-description">Tarjetas versátiles con múltiples estilos</p>
+
+                <div class="demo-grid">
+                    <!-- Card básica -->
+                    <div class="card card-hover">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-star"></i>
+                                Card Básica
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Esta es una card básica con hover effect. Pasa el cursor sobre ella para ver la animación.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary">Acción</button>
+                        </div>
+                    </div>
+
+                    <!-- Card con gradiente -->
+                    <div class="card card-gradient-primary card-hover">
+                        <div class="card-body">
+                            <h3 class="card-title">Card con Gradiente</h3>
+                            <p>Esta card utiliza un gradiente como fondo y tiene un efecto glow al hacer hover.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card de estadística -->
+                    <div class="card card-stats card-hover">
+                        <div class="card-body">
+                            <div class="card-stats-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-stats-value">1,234</div>
+                            <div class="card-stats-label">Usuarios Activos</div>
+                        </div>
+                    </div>
+
+                    <!-- Card con badge -->
+                    <div class="card card-hover" style="position: relative;">
+                        <div class="card-badge card-badge-success">NUEVO</div>
+                        <div class="card-body">
+                            <h3 class="card-title">Card con Badge</h3>
+                            <p>Esta card muestra un badge en la esquina superior derecha.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card con imagen -->
+                    <div class="card card-hover">
+                        <img src="https://picsum.photos/400/200?random=1" alt="Card" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Card con Imagen</h3>
+                            <p>Una card que incluye una imagen en la parte superior.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card primaria -->
+                    <div class="card card-primary card-hover">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <i class="fas fa-bolt"></i>
+                                Card Primaria
+                            </h3>
+                            <p>Card con el color primario del tema aplicado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: var(--space-8);"></div>
+
+                <h3 class="mb-4">Card Creada Dinámicamente</h3>
+                <button class="btn btn-primary mb-6" onclick="createDynamicCard()">
+                    <i class="fas fa-plus"></i> Crear Card
+                </button>
+                <div id="dynamic-cards-container" class="demo-grid"></div>
+            </section>
+
+            <!-- MODALS & DIALOGS SECTION -->
+            <section id="modals" class="demo-section">
+                <h2 class="demo-title">Modals & Dialogs</h2>
+                <p class="demo-description">Sistema completo de modales, mensajes y entradas</p>
+
+                <h3 class="mb-4">Modales</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary" onclick="openBasicModal()">
+                        <i class="fas fa-window-restore"></i> Modal Básico
+                    </button>
+                    <button class="btn btn-secondary" onclick="modal.confirm({
+                        title: '¿Eliminar elemento?',
+                        message: 'Esta acción no se puede deshacer.',
+                        variant: 'error',
+                        confirmText: 'Eliminar',
+                        onConfirm: () => toast.success('Elemento eliminado')
+                    })">
+                        <i class="fas fa-trash"></i> Modal Confirmar
+                    </button>
+                    <button class="btn btn-success" onclick="openFormModal()">
+                        <i class="fas fa-edit"></i> Modal con Formulario
+                    </button>
+                    <button class="btn btn-info" onclick="const m = modal.loading('Procesando...'); setTimeout(() => modal.close(m), 3000)">
+                        <i class="fas fa-spinner"></i> Modal Loading
+                    </button>
+                </div>
+
+                <h3 class="mb-4">Message Box</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-success" onclick="msgBox.success('La operación se completó correctamente')">
+                        <i class="fas fa-check-circle"></i> Success
+                    </button>
+                    <button class="btn btn-error" onclick="msgBox.error('Ocurrió un error al procesar la solicitud')">
+                        <i class="fas fa-times-circle"></i> Error
+                    </button>
+                    <button class="btn btn-warning" onclick="msgBox.warning('Esta acción requiere precaución')">
+                        <i class="fas fa-exclamation-triangle"></i> Warning
+                    </button>
+                    <button class="btn btn-info" onclick="msgBox.info('Esta es una notificación informativa')">
+                        <i class="fas fa-info-circle"></i> Info
+                    </button>
+                    <button class="btn btn-primary" onclick="msgBox.confirm('¿Deseas continuar con esta acción?', '¿Confirmar?', 
+                        () => toast.success('Acción confirmada'), 
+                        () => toast.info('Acción cancelada'))">
+                        <i class="fas fa-question-circle"></i> Confirm
+                    </button>
+                    <button class="btn btn-error" onclick="msgBox.delete('¿Estás seguro de eliminar este elemento?', '¿Eliminar?',
+                        () => toast.success('Elemento eliminado'))">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </div>
+
+                <h3 class="mb-4">Input Box</h3>
+                <div class="demo-buttons-grid mb-8">
+                    <button class="btn btn-primary" onclick="inputBox.text('¿Cuál es tu nombre?', 'Juan Pérez').then(r => r && toast.info(`Hola ${r.value}!`))">
+                        <i class="fas fa-keyboard"></i> Input Texto
+                    </button>
+                    <button class="btn btn-secondary" onclick="inputBox.email('Ingresa tu email').then(r => r && toast.success(`Email: ${r.email}`))">
+                        <i class="fas fa-envelope"></i> Input Email
+                    </button>
+                    <button class="btn btn-success" onclick="inputBox.password().then(r => r && toast.info('Contraseña ingresada'))">
+                        <i class="fas fa-lock"></i> Input Password
+                    </button>
+                    <button class="btn btn-info" onclick="inputBox.number('¿Cuál es tu edad?', '18').then(r => r && toast.info(`Edad: ${r.value} años`))">
+                        <i class="fas fa-hashtag"></i> Input Number
+                    </button>
+                    <button class="btn btn-warning" onclick="inputBox.textarea('Escribe un comentario', 'Tu comentario aquí...').then(r => r && toast.success('Comentario guardado'))">
+                        <i class="fas fa-comment"></i> Input Textarea
+                    </button>
+                    <button class="btn btn-primary" onclick="openMultiFieldInput()">
+                        <i class="fas fa-list"></i> Múltiples Campos
+                    </button>
+                </div>
+
+                <h3 class="mb-4">Toast Notifications</h3>
+                <div class="demo-buttons-grid">
+                    <button class="btn btn-success" onclick="toast.success('Operación completada correctamente')">
+                        <i class="fas fa-check"></i> Success Toast
+                    </button>
+                    <button class="btn btn-error" onclick="toast.error('Ha ocurrido un error', 'Error')">
+                        <i class="fas fa-times"></i> Error Toast
+                    </button>
+                    <button class="btn btn-warning" onclick="toast.warning('Revisa esta advertencia')">
+                        <i class="fas fa-exclamation"></i> Warning Toast
+                    </button>
+                    <button class="btn btn-info" onclick="toast.info('Nueva información disponible')">
+                        <i class="fas fa-info"></i> Info Toast
+                    </button>
+                    <button class="btn btn-primary" onclick="toast.show({
+                        type: 'success',
+                        title: 'Con Acciones',
+                        message: 'Toast con botones de acción',
+                        duration: 0,
+                        actions: [
+                            { text: 'Ver', primary: true, onClick: () => toast.info('Ver clickeado') },
+                            { text: 'Ignorar', onClick: () => toast.info('Ignorado') }
+                        ]
+                    })">
+                        <i class="fas fa-hand-pointer"></i> Toast con Acciones
+                    </button>
+                    <button class="btn btn-secondary" onclick="toast.promise(
+                        new Promise(resolve => setTimeout(resolve, 2000)),
+                        { loading: 'Procesando...', success: '¡Completado!', error: 'Error' }
+                    )">
+                        <i class="fas fa-hourglass-half"></i> Promise Toast
+                    </button>
+                </div>
+            </section>
+
+            <!-- DROPDOWN SECTION -->
+            <section id="dropdown" class="demo-section">
+                <h2 class="demo-title">Dropdown Component</h2>
+                <p class="demo-description">Menús desplegables con múltiples variantes</p>
+                
+                <div class="demo-grid">
+                    <div class="dropdown" data-dropdown>
+                        <button class="dropdown-trigger" data-dropdown-trigger aria-expanded="false">
+                            <span>Menú Básico</span>
+                            <svg class="dropdown-trigger__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" data-dropdown-menu>
+                            <button class="dropdown-item" data-dropdown-item>
+                                <i class="fas fa-user dropdown-item__icon"></i>
+                                <span class="dropdown-item__text">Perfil</span>
+                            </button>
+                            <button class="dropdown-item" data-dropdown-item>
+                                <i class="fas fa-cog dropdown-item__icon"></i>
+                                <span class="dropdown-item__text">Configuración</span>
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item dropdown-item--danger" data-dropdown-item>
+                                <i class="fas fa-sign-out-alt dropdown-item__icon"></i>
+                                <span class="dropdown-item__text">Cerrar sesión</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="dropdown dropdown--primary" data-dropdown>
+                        <button class="dropdown-trigger" data-dropdown-trigger aria-expanded="false">
+                            <span>Notificaciones</span>
+                            <span style="background: var(--color-error); color: white; padding: 0.125rem 0.5rem; border-radius: var(--radius-full); font-size: var(--font-size-xs); margin-left: var(--space-2);">3</span>
+                        </button>
+                        <div class="dropdown-menu" data-dropdown-menu>
+                            <div class="dropdown-header">Nuevas</div>
+                            <button class="dropdown-item" data-dropdown-item>
+                                <span class="dropdown-item__text">Mensaje de Ana</span>
+                                <span class="dropdown-item__badge">Nuevo</span>
+                            </button>
+                            <button class="dropdown-item" data-dropdown-item>
+                                <span class="dropdown-item__text">Actualización disponible</span>
+                                <span class="dropdown-item__badge">Nuevo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABS SECTION -->
+            <section id="tabs" class="demo-section">
+                <h2 class="demo-title">Tabs Component</h2>
+                <p class="demo-description">Sistema de pestañas con múltiples estilos</p>
+
+                <div class="tabs" data-tabs data-tabs-active="0">
+                    <div class="tabs-list" data-tabs-list role="tablist">
+                        <button class="tab-button" data-tab-button role="tab">
+                            <span>Inicio</span>
+                        </button>
+                        <button class="tab-button" data-tab-button role="tab">
+                            <span>Perfil</span>
+                        </button>
+                        <button class="tab-button" data-tab-button role="tab">
+                            <span>Configuración</span>
+                        </button>
+                        <div class="tabs-indicator" data-tabs-indicator></div>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="tab-panel" data-tab-panel>
+                            <h3>Panel de Inicio</h3>
+                            <p>Bienvenido al panel de inicio. Aquí encontrarás información relevante sobre tu dashboard.</p>
+                        </div>
+                        <div class="tab-panel" data-tab-panel>
+                            <h3>Panel de Perfil</h3>
+                            <p>Información del perfil del usuario y configuración de cuenta.</p>
+                        </div>
+                        <div class="tab-panel" data-tab-panel>
+                            <h3>Panel de Configuración</h3>
+                            <p>Opciones de configuración de la aplicación y preferencias.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: var(--space-12);"></div>
+
+                <h3 class="mb-4">Tabs Estilo Pills</h3>
+                <div class="tabs tabs--pills" data-tabs>
+                    <div class="tabs-list" data-tabs-list role="tablist">
+                        <button class="tab-button" data-tab-button role="tab">General</button>
+                        <button class="tab-button" data-tab-button role="tab">Seguridad</button>
+                        <button class="tab-button" data-tab-button role="tab">Notificaciones</button>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="tab-panel" data-tab-panel>
+                            <p>Configuración general de la aplicación.</p>
+                        </div>
+                        <div class="tab-panel" data-tab-panel>
+                            <p>Configuración de seguridad y privacidad.</p>
+                        </div>
+                        <div class="tab-panel" data-tab-panel>
+                            <p>Preferencias de notificaciones.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLE SECTION -->
+            <section id="table" class="demo-section">
+                <h2 class="demo-title">Table Component</h2>
+                <p class="demo-description">Tablas estilizadas con múltiples funcionalidades</p>
+
+                <div class="table-container">
+                    <table class="table table--hoverable">
+                        <thead>
+                            <tr>
+                                <th data-sortable>Usuario</th>
+                                <th data-sortable>Email</th>
+                                <th data-sortable>Estado</th>
+                                <th data-sortable class="table-cell--numeric">Ventas</th>
+                                <th class="table-cell--actions">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="table-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=1" alt="" class="table-avatar__img">
+                                        <div>
+                                            <div class="table-avatar__name">John Doe</div>
+                                            <div class="table-avatar__email">john@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>john@example.com</td>
+                                <td><span class="table-badge table-badge--success">Activo</span></td>
+                                <td class="table-cell--numeric">$12,450</td>
+                                <td class="table-cell--actions">
+                                    <button class="btn btn-sm btn-ghost-primary">Ver</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="table-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=5" alt="" class="table-avatar__img">
+                                        <div>
+                                            <div class="table-avatar__name">Jane Smith</div>
+                                            <div class="table-avatar__email">jane@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>jane@example.com</td>
+                                <td><span class="table-badge table-badge--warning">Pendiente</span></td>
+                                <td class="table-cell--numeric">$8,320</td>
+                                <td class="table-cell--actions">
+                                    <button class="btn btn-sm btn-ghost-primary">Ver</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="table-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=8" alt="" class="table-avatar__img">
+                                        <div>
+                                            <div class="table-avatar__name">Mike Johnson</div>
+                                            <div class="table-avatar__email">mike@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>mike@example.com</td>
+                                <td><span class="table-badge table-badge--error">Inactivo</span></td>
+                                <td class="table-cell--numeric">$5,890</td>
+                                <td class="table-cell--actions">
+                                    <button class="btn btn-sm btn-ghost-primary">Ver</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="table-footer">
+                        <div class="table-footer__info">Mostrando 1-3 de 3 resultados</div>
+                        <div class="table-pagination">
+                            <button class="table-pagination__btn" disabled>Anterior</button>
+                            <button class="table-pagination__btn table-pagination__btn--active">1</button>
+                            <button class="table-pagination__btn">2</button>
+                            <button class="table-pagination__btn">3</button>
+                            <button class="table-pagination__btn">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div style="height: var(--space-20);"></div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="button.js"></script>
+    <script src="card.js"></script>
+    <script src="modal.js"></script>
+    <script src="toast.js"></script>
+    <script src="inputbox.js"></script>
+    <script src="messagebox.js"></script>
+    <script src="dropdown.js"></script>
+    <script src="tabs.js"></script>
+    <script src="navbar.js"></script>
+    <script src="sidebar.js"></script>
+
+    <script>
+        // Funciones de ejemplo para los botones
+        function openBasicModal() {
+            modal.open({
+                title: 'Modal Básico',
+                subtitle: 'Este es un ejemplo de modal',
+                body: `
+                    <p>Este es el contenido del modal. Puedes incluir cualquier HTML aquí.</p>
+                    <p>Los modales son útiles para mostrar información importante o formularios.</p>
+                `,
+                footer: [
+                    (() => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-secondary';
+                        btn.textContent = 'Cerrar';
+                        btn.onclick = function() { modal.close(this.closest('.modal-overlay')); };
+                        return btn;
+                    })(),
+                    (() => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-primary';
+                        btn.textContent = 'Aceptar';
+                        btn.onclick = function() { 
+                            toast.success('¡Acción confirmada!');
+                            modal.close(this.closest('.modal-overlay'));
+                        };
+                        return btn;
+                    })()
+                ],
+                size: 'md',
+                icon: 'fas fa-info-circle'
+            });
+        }
+
+        function openFormModal() {
+            const form = document.createElement('div');
+            form.innerHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--color-white); font-weight: 600;">Nombre</label>
+                    <input type="text" id="modal-name" placeholder="Tu nombre" style="width: 100%; padding: 0.75rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); color: var(--color-white);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--color-white); font-weight: 600;">Email</label>
+                    <input type="email" id="modal-email" placeholder="tu@email.com" style="width: 100%; padding: 0.75rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); color: var(--color-white);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--color-white); font-weight: 600;">Mensaje</label>
+                    <textarea id="modal-message" placeholder="Tu mensaje" rows="4" style="width: 100%; padding: 0.75rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); color: var(--color-white); resize: vertical;"></textarea>
+                </div>
+            `;
+
+            modal.open({
+                title: 'Formulario de Contacto',
+                subtitle: 'Completa los campos para enviar tu mensaje',
+                body: form,
+                footer: [
+                    (() => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-secondary';
+                        btn.textContent = 'Cancelar';
+                        btn.onclick = function() { modal.close(this.closest('.modal-overlay')); };
+                        return btn;
+                    })(),
+                    (() => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-success';
+                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar';
+                        btn.onclick = function() {
+                            const name = document.getElementById('modal-name').value;
+                            const email = document.getElementById('modal-email').value;
+                            const message = document.getElementById('modal-message').value;
+                            
+                            if (name && email && message) {
+                                toast.success('Formulario enviado correctamente');
+                                modal.close(this.closest('.modal-overlay'));
+                            } else {
+                                toast.error('Por favor completa todos los campos');
+                            }
+                        };
+                        return btn;
+                    })()
+                ],
+                size: 'md',
+                icon: 'fas fa-edit'
+            });
+        }
+
+        function openMultiFieldInput() {
+            inputBox.show({
+                title: 'Registro de Usuario',
+                description: 'Completa todos los campos para crear tu cuenta',
+                icon: '👤',
+                fields: [
+                    {
+                        name: 'username',
+                        label: 'Nombre de usuario',
+                        type: 'text',
+                        placeholder: 'usuario123',
+                        required: true,
+                        icon: 'fas fa-user',
+                        minLength: 3
+                    },
+                    {
+                        name: 'email',
+                        label: 'Email',
+                        type: 'email',
+                        placeholder: 'usuario@ejemplo.com',
+                        required: true,
+                        icon: 'fas fa-envelope'
+                    },
+                    {
+                        name: 'password',
+                        label: 'Contraseña',
+                        type: 'password',
+                        placeholder: '••••••••',
+                        required: true,
+                        icon: 'fas fa-lock',
+                        minLength: 6
+                    },
+                    {
+                        name: 'role',
+                        label: 'Rol',
+                        type: 'select',
+                        required: true,
+                        options: [
+                            { value: 'user', label: 'Usuario' },
+                            { value: 'admin', label: 'Administrador' },
+                            { value: 'moderator', label: 'Moderador' }
+                        ]
+                    },
+                    {
+                        name: 'bio',
+                        label: 'Biografía',
+                        type: 'textarea',
+                        placeholder: 'Cuéntanos sobre ti...',
+                        rows: 4
+                    },
+                    {
+                        name: 'terms',
+                        label: 'Acepto los términos y condiciones',
+                        type: 'checkbox',
+                        required: true
+                    }
+                ],
+                confirmText: 'Registrar',
+                cancelText: 'Cancelar'
+            }).then(result => {
+                if (result) {
+                    console.log('Datos del formulario:', result);
+                    toast.success('Usuario registrado correctamente');
+                }
+            });
+        }
+
+        function createDynamicCard() {
+            const container = document.getElementById('dynamic-cards-container');
+            
+            const card = cardComponent.create({
+                title: `Card Dinámica #${container.children.length + 1}`,
+                subtitle: 'Creada con JavaScript',
+                body: 'Esta card fue creada dinámicamente usando el método create() del componente Card.',
+                footer: (() => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-sm btn-error';
+                    btn.innerHTML = '<i class="fas fa-trash"></i> Eliminar';
+                    btn.onclick = function() {
+                        this.closest('.card').remove();
+                        toast.info('Card eliminada');
+                    };
+                    return btn;
+                })(),
+                variant: 'primary',
+                hover: true,
+                glow: true
+            });
+            
+            container.appendChild(card);
+            toast.success('Card creada');
+        }
+
+        // Mensaje de bienvenida
+        setTimeout(() => {
+            toast.show({
+                type: 'success',
+                title: '¡Bienvenido!',
+                message: 'Explora todos los componentes del framework',
+                duration: 5000,
+                position: 'top-right'
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

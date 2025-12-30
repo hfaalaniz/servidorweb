@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Prueba - Tracking Activo</title>
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-label {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        
+        .status-value {
+            font-weight: 700;
+        }
+        
+        .indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .logs {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+        
+        .log-item {
+            padding: 5px 0;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .info-box {
+            background: rgba(16, 185, 129, 0.2);
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .info-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Página de Prueba</h1>
+        
+        <div class="status">
+            <div class="status-item">
+                <span class="status-label">Estado del Tracking:</span>
+                <span class="status-value" id="trackingStatus">
+                    <span class="indicator"></span>Inicializando...
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Session ID:</span>
+                <span class="status-value" id="sessionId">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Tiempo Activo:</span>
+                <span class="status-value" id="tiempoActivo">0s</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Último Ping:</span>
+                <span class="status-value" id="ultimoPing">-</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>✅ ¿Cómo funciona?</h3>
+            <p>
+                Esta página está enviando datos en tiempo real a tu sistema de tracking. 
+                Mantén esta pestaña abierta y ve al dashboard para ver tu sesión activa.
+            </p>
+        </div>
+        
+        <button class="btn" onclick="window.open('index.html', '_blank')">
+            📊 Abrir Dashboard de Tracking
+        </button>
+        
+        <div class="logs" id="logs">
+            <div class="log-item">📋 Iniciando sistema de tracking...</div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN DE SUPABASE
+        // ============================================
+        const SUPABASE_CONFIG = {
+            url: 'https://vugxbsefyrqmsdnzklva.supabase.co',
+            key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1Z3hic2VmeXJxbXNkbnprbHZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzNzkxOTksImV4cCI6MjA4MTk1NTE5OX0.RMTOoPIdqyMgTZPftpx0e5gi0rOyWuAvsbdZS3r7zWY'
+        };
+
+        // ============================================
+        // CLIENTE DE TRACKING
+        // ============================================
+        class ClienteTracking {
+            constructor() {
+                this.sessionId = this.generarSessionId();
+                this.supabase = null;
+                this.pingInterval = null;
+                this.tiempoInicio = Date.now();
+                this.registroId = null;
+            }
+            
+            async init() {
+                try {
+                    this.log('🚀 Inicializando cliente de tracking...');
+                    
+                    // Inicializar Supabase
+                    this.supabase = supabase.createClient(
+                        SUPABASE_CONFIG.url,
+                        SUPABASE_CONFIG.key
+                    );
+                    
+                    this.log('✅ Cliente Supabase creado');
+                    
+                    // Actualizar UI
+                    document.getElementById('sessionId').textContent = this.sessionId.substring(0, 20) + '...';
+                    
+                    // Obtener info del dispositivo
+                    const info = this.obtenerInfoDispositivo();
+                    this.log(`📱 Dispositivo detectado: ${info.tipo_dispositivo}`);
+                    
+                    // Registrar sesión
+                    await this.registrarSesion(info);
+                    
+                    // Iniciar ping
+                    this.iniciarPing();
+                    
+                    // Registrar cierre
+                    window.addEventListener('beforeunload', () => this.cerrarSesion());
+                    
+                    // Actualizar estado
+                    document.getElementById('trackingStatus').innerHTML = 
+                        '<span class="indicator"></span>Conectado';
+                    
+                    this.log('🎉 Sistema de tracking activo');
+                    
+                } catch (error) {
+                    this.log('❌ Error: ' + error.message);
+                    console.error('Error al inicializar:', error);
+                }
+            }
+            
+            generarSessionId() {
+                return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+            
+            obtenerInfoDispositivo() {
+                const ua = navigator.userAgent;
+                
+                let tipoDispositivo = 'PC';
+                if (/Mobile|Android|iPhone/i.test(ua)) {
+                    tipoDispositivo = 'Móvil';
+                } else if (/iPad|Tablet/i.test(ua)) {
+                    tipoDispositivo = 'Tablet';
+                }
+                
+                let navegador = 'Desconocido';
+                if (ua.indexOf('Chrome') > -1) navegador = 'Chrome';
+                else if (ua.indexOf('Safari') > -1) navegador = 'Safari';
+                else if (ua.indexOf('Firefox') > -1) navegador = 'Firefox';
+                else if (ua.indexOf('Edge') > -1) navegador = 'Edge';
+                
+                let sistemaOperativo = 'Desconocido';
+                if (ua.indexOf('Win') > -1) sistemaOperativo = 'Windows';
+                else if (ua.indexOf('Mac') > -1) sistemaOperativo = 'MacOS';
+                else if (ua.indexOf('Linux') > -1) sistemaOperativo = 'Linux';
+                else if (ua.indexOf('Android') > -1) sistemaOperativo = 'Android';
+                else if (ua.indexOf('iOS') > -1) sistemaOperativo = 'iOS';
+                
+                return {
+                    tipo_dispositivo: tipoDispositivo,
+                    navegador: navegador,
+                    sistema_operativo: sistemaOperativo,
+                    resolucion: `${window.screen.width}x${window.screen.height}`,
+                    idioma: navigator.language,
+                    zona_horaria: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    ubicacion: 'Test Location, Argentina',
+                    ip: null
+                };
+            }
+            
+            async registrarSesion(info) {
+                try {
+                    const idUsuario = this.obtenerIdUsuario();
+                    
+                    this.log(`👤 Usuario ID: ${idUsuario}`);
+                    
+                    const { data, error } = await this.supabase
+                        .from('instancias_activas')
+                        .insert([{
+                            id_usuario: idUsuario,
+                            session_id: this.sessionId,
+                            tipo_dispositivo: info.tipo_dispositivo,
+                            navegador: info.navegador,
+                            sistema_operativo: info.sistema_operativo,
+                            resolucion: info.resolucion,
+                            idioma: info.idioma,
+                            zona_horaria: info.zona_horaria,
+                            ubicacion: info.ubicacion,
+                            tiempo_activo: 0,
+                            last_ping: new Date().toISOString()
+                        }])
+                        .select();
+                    
+                    if (error) throw error;
+                    
+                    if (data && data.length > 0) {
+                        this.registroId = data[0].id;
+                    }
+                    
+                    this.log('✅ Sesión registrada en Supabase');
+                    
+                    // Registrar en historial
+                    await this.supabase
+                        .from('historial_conexiones')
+                        .insert([{
+                            id_usuario: idUsuario,
+                            session_id: this.sessionId,
+                            tipo_dispositivo: info.tipo_dispositivo,
+                            navegador: info.navegador,
+                            sistema_operativo: info.sistema_operativo,
+                            ubicacion: info.ubicacion,
+                            inicio_sesion: new Date().toISOString()
+                        }]);
+                    
+                    this.log('✅ Historial actualizado');
+                    
+                } catch (error) {
+                    this.log('❌ Error al registrar: ' + error.message);
+                    throw error;
+                }
+            }
+            
+            obtenerIdUsuario() {
+                let userId = localStorage.getItem('tracking_user_id');
+                if (!userId) {
+                    userId = 'test_user_' + Date.now();
+                    localStorage.setItem('tracking_user_id', userId);
+                }
+                return userId;
+            }
+            
+            iniciarPing() {
+                // Actualizar tiempo activo cada segundo en la UI
+                setInterval(() => {
+                    const segundos = Math.floor((Date.now() - this.tiempoInicio) / 1000);
+                    document.getElementById('tiempoActivo').textContent = this.formatearTiempo(segundos);
+                }, 1000);
+                
+                // Enviar ping cada 30 segundos a Supabase
+                this.pingInterval = setInterval(async () => {
+                    try {
+                        const tiempoActivo = Math.floor((Date.now() - this.tiempoInicio) / 1000);
+                        
+                        const { error } = await this.supabase
+                            .from('instancias_activas')
+                            .update({
+                                tiempo_activo: tiempoActivo,
+                                last_ping: new Date().toISOString()
+                            })
+                            .eq('session_id', this.sessionId);
+                        
+                        if (error) throw error;
+                        
+                        const ahora = new Date().toLocaleTimeString('es-ES');
+                        document.getElementById('ultimoPing').textContent = ahora;
+                        this.log(`🔄 Ping enviado: ${tiempoActivo}s`);
+                        
+                    } catch (error) {
+                        this.log('⚠️ Error en ping: ' + error.message);
+                    }
+                }, 30000);
+                
+                // Hacer un ping inmediato
+                setTimeout(async () => {
+                    const { error } = await this.supabase
+                        .from('instancias_activas')
+                        .update({
+                            tiempo_activo: 1,
+                            last_ping: new Date().toISOString()
+                        })
+                        .eq('session_id', this.sessionId);
+                    
+                    if (!error) {
+                        const ahora = new Date().toLocaleTimeString('es-ES');
+                        document.getElementById('ultimoPing').textContent = ahora;
+                    }
+                }, 1000);
+            }
+            
+            async cerrarSesion() {
+                try {
+                    if (this.pingInterval) {
+                        clearInterval(this.pingInterval);
+                    }
+                    
+                    const tiempoTotal = Math.floor((Date.now() - this.tiempoInicio) / 1000);
+                    
+                    await this.supabase
+                        .from('instancias_activas')
+                        .delete()
+                        .eq('session_id', this.sessionId);
+                    
+                    await this.supabase
+                        .from('historial_conexiones')
+                        .update({
+                            fin_sesion: new Date().toISOString(),
+                            duracion: tiempoTotal
+                        })
+                        .eq('session_id', this.sessionId);
+                    
+                    this.log('👋 Sesión cerrada');
+                    
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                }
+            }
+            
+            formatearTiempo(segundos) {
+                if (segundos < 60) return segundos + 's';
+                const minutos = Math.floor(segundos / 60);
+                const segs = segundos % 60;
+                if (minutos < 60) return `${minutos}m ${segs}s`;
+                const horas = Math.floor(minutos / 60);
+                const mins = minutos % 60;
+                return `${horas}h ${mins}m ${segs}s`;
+            }
+            
+            log(mensaje) {
+                console.log(mensaje);
+                const logsDiv = document.getElementById('logs');
+                const logItem = document.createElement('div');
+                logItem.className = 'log-item';
+                logItem.textContent = `[${new Date().toLocaleTimeString('es-ES')}] ${mensaje}`;
+                logsDiv.appendChild(logItem);
+                logsDiv.scrollTop = logsDiv.scrollHeight;
+            }
+        }
+
+        // Inicializar cuando el DOM esté listo
+        let tracking = null;
+        document.addEventListener('DOMContentLoaded', () => {
+            tracking = new ClienteTracking();
+            tracking.init();
+        });
+
+        // Limpiar al cerrar
+        window.addEventListener('beforeunload', () => {
+            if (tracking) {
+                tracking.cerrarSesion();
+            }
+        });
+    </script>
+</body>
+</html>

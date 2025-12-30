@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Botones | Framework Personal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #1A1D1F 0%, #2D3436 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00D4AA 0%, #6C5CE7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #636E72;
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00D4AA;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-description {
+            color: #B2BEC3;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #B2BEC3;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+        
+        .code-block pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #00D4AA;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 212, 170, 0.2);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            color: #00D4AA;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 212, 170, 0.3);
+            border-color: rgba(0, 212, 170, 0.5);
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 2rem 0;
+        }
+        
+        .note {
+            background: rgba(108, 92, 231, 0.1);
+            border-left: 4px solid #6C5CE7;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .note-title {
+            font-weight: 600;
+            color: #6C5CE7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .note-text {
+            color: #B2BEC3;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0, 184, 148, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Incluir Variables CSS -->
+    <link rel="stylesheet" href="core/variables.css">
+    
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-hand-pointer"></i> Botones</h1>
+            <p>Sistema completo de botones con múltiples variantes y estilos</p>
+        </div>
+        
+        <!-- VARIANTES DE COLOR -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-palette"></i>
+                    Variantes de Color
+                </h2>
+                <p class="section-description">
+                    8 variantes de color predefinidas con gradientes y sombras
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md">Primary</button>
+                <button class="btn btn-secondary btn-md">Secondary</button>
+                <button class="btn btn-success btn-md">Success</button>
+                <button class="btn btn-error btn-md">Error</button>
+                <button class="btn btn-warning btn-md">Warning</button>
+                <button class="btn btn-info btn-md">Info</button>
+                <button class="btn btn-dark btn-md">Dark</button>
+                <button class="btn btn-light btn-md">Light</button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="btn btn-error"&gt;Error&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- TAMAÑOS -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-ruler-horizontal"></i>
+                    Tamaños
+                </h2>
+                <p class="section-description">
+                    4 tamaños disponibles: Small, Medium, Large y Extra Large
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-primary btn-sm">Small</button>
+                <button class="btn btn-primary btn-md">Medium</button>
+                <button class="btn btn-primary btn-lg">Large</button>
+                <button class="btn btn-primary btn-xl">Extra Large</button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary btn-sm"&gt;Small&lt;/button&gt;
+&lt;button class="btn btn-primary btn-md"&gt;Medium&lt;/button&gt;
+&lt;button class="btn btn-primary btn-lg"&gt;Large&lt;/button&gt;
+&lt;button class="btn btn-primary btn-xl"&gt;Extra Large&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- ESTILOS: OUTLINE -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-border-style"></i>
+                    Estilo Outline
+                </h2>
+                <p class="section-description">
+                    Botones con borde y fondo transparente
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-outline-primary btn-md">Primary</button>
+                <button class="btn btn-outline-secondary btn-md">Secondary</button>
+                <button class="btn btn-outline-success btn-md">Success</button>
+                <button class="btn btn-outline-error btn-md">Error</button>
+                <button class="btn btn-outline-warning btn-md">Warning</button>
+                <button class="btn btn-outline-info btn-md">Info</button>
+                <button class="btn btn-outline-light btn-md">Light</button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-outline-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-outline-secondary"&gt;Secondary&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- ESTILOS: GHOST -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-ghost"></i>
+                    Estilo Ghost
+                </h2>
+                <p class="section-description">
+                    Botones minimalistas sin borde
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-ghost-primary btn-md">Primary</button>
+                <button class="btn btn-ghost-secondary btn-md">Secondary</button>
+                <button class="btn btn-ghost-success btn-md">Success</button>
+                <button class="btn btn-ghost-error btn-md">Error</button>
+                <button class="btn btn-ghost-light btn-md">Light</button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-ghost-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-ghost-secondary"&gt;Secondary&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- ESTILOS: GLASS -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-droplet"></i>
+                    Estilo Glass (Glassmorphism)
+                </h2>
+                <p class="section-description">
+                    Botones con efecto de vidrio esmerilado
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-glass btn-md">Glass Default</button>
+                <button class="btn btn-glass-primary btn-md">Glass Primary</button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-glass"&gt;Glass Default&lt;/button&gt;
+&lt;button class="btn btn-glass-primary"&gt;Glass Primary&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- CON ICONOS -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-icons"></i>
+                    Botones con Iconos
+                </h2>
+                <p class="section-description">
+                    Iconos antes, después o solo icono
+                </p>
+            </div>
+            
+            <div class="label">Icono a la izquierda</div>
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md">
+                    <i class="fas fa-download"></i>
+                    <span>Descargar</span>
+                </button>
+                <button class="btn btn-success btn-md">
+                    <i class="fas fa-check"></i>
+                    <span>Guardar</span>
+                </button>
+                <button class="btn btn-error btn-md">
+                    <i class="fas fa-trash"></i>
+                    <span>Eliminar</span>
+                </button>
+            </div>
+            
+            <div class="label">Icono a la derecha</div>
+            <div class="demo-row">
+                <button class="btn btn-secondary btn-md">
+                    <span>Siguiente</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-info btn-md">
+                    <span>Subir</span>
+                    <i class="fas fa-upload"></i>
+                </button>
+            </div>
+            
+            <div class="label">Solo icono</div>
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md btn-icon-only">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn btn-secondary btn-md btn-icon-only">
+                    <i class="fas fa-star"></i>
+                </button>
+                <button class="btn btn-success btn-md btn-icon-only">
+                    <i class="fas fa-share"></i>
+                </button>
+                <button class="btn btn-error btn-md btn-icon-only">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="btn btn-ghost-light btn-lg btn-icon-only">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary"&gt;
+    &lt;i class="fas fa-download"&gt;&lt;/i&gt;
+    &lt;span&gt;Descargar&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;button class="btn btn-primary btn-icon-only"&gt;
+    &lt;i class="fas fa-heart"&gt;&lt;/i&gt;
+&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- ESTADOS -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-toggle-on"></i>
+                    Estados
+                </h2>
+                <p class="section-description">
+                    Estados disabled y loading
+                </p>
+            </div>
+            
+            <div class="label">Disabled</div>
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md" disabled>Disabled</button>
+                <button class="btn btn-outline-primary btn-md" disabled>Disabled Outline</button>
+                <button class="btn btn-ghost-primary btn-md" disabled>Disabled Ghost</button>
+            </div>
+            
+            <div class="label">Loading</div>
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md loading">Loading...</button>
+                <button class="btn btn-success btn-md loading">Guardando...</button>
+                <button class="btn btn-error btn-md loading">Eliminando...</button>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-secondary btn-md" onclick="toggleLoading(this)">
+                    <i class="fas fa-save"></i>
+                    <span>Click para Loading</span>
+                </button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary" disabled&gt;Disabled&lt;/button&gt;
+&lt;button class="btn btn-primary loading"&gt;Loading...&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- FULL WIDTH -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-arrows-left-right"></i>
+                    Full Width (Block)
+                </h2>
+                <p class="section-description">
+                    Botones que ocupan todo el ancho disponible
+                </p>
+            </div>
+            
+            <div class="demo-column">
+                <button class="btn btn-primary btn-md btn-block">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Iniciar Sesión</span>
+                </button>
+                <button class="btn btn-outline-secondary btn-md btn-block">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registrarse</span>
+                </button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary btn-block"&gt;Full Width&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- ROUNDED -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-circle"></i>
+                    Rounded (Totalmente redondeado)
+                </h2>
+                <p class="section-description">
+                    Botones con bordes completamente redondeados (píldora)
+                </p>
+            </div>
+            
+            <div class="demo-row">
+                <button class="btn btn-primary btn-md btn-rounded">
+                    <i class="fas fa-rocket"></i>
+                    <span>Comenzar</span>
+                </button>
+                <button class="btn btn-secondary btn-md btn-rounded">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Enviar</span>
+                </button>
+                <button class="btn btn-success btn-lg btn-rounded">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Confirmar</span>
+                </button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary btn-rounded"&gt;Rounded&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- FLOATING ACTION BUTTON -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Floating Action Button (FAB)
+                </h2>
+                <p class="section-description">
+                    Botón flotante fijo en la esquina inferior derecha
+                </p>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">💡 Ver en la esquina inferior derecha</div>
+                <div class="note-text">
+                    El botón FAB aparece fijo en la parte inferior derecha de la pantalla
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;button class="btn btn-primary btn-fab"&gt;
+    &lt;i class="fas fa-plus"&gt;&lt;/i&gt;
+&lt;/button&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- GRUPOS DE BOTONES -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-layer-group"></i>
+                    Grupos de Botones
+                </h2>
+                <p class="section-description">
+                    Agrupar botones horizontal o verticalmente
+                </p>
+            </div>
+            
+            <div class="label">Grupo horizontal</div>
+            <div class="btn-group">
+                <button class="btn btn-primary btn-md">Opción 1</button>
+                <button class="btn btn-primary btn-md">Opción 2</button>
+                <button class="btn btn-primary btn-md">Opción 3</button>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="label">Grupo conectado</div>
+            <div class="btn-group-connected">
+                <button class="btn btn-outline-primary btn-md">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-md">
+                    <i class="fas fa-align-center"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-md">
+                    <i class="fas fa-align-right"></i>
+                </button>
+            </div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>&lt;div class="btn-group"&gt;
+    &lt;button class="btn btn-primary"&gt;Opción 1&lt;/button&gt;
+    &lt;button class="btn btn-primary"&gt;Opción 2&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="btn-group-connected"&gt;
+    &lt;button class="btn btn-outline-primary"&gt;Left&lt;/button&gt;
+    &lt;button class="btn btn-outline-primary"&gt;Center&lt;/button&gt;
+    &lt;button class="btn btn-outline-primary"&gt;Right&lt;/button&gt;
+&lt;/div&gt;</pre>
+            </div>
+        </div>
+        
+        <!-- USO CON JAVASCRIPT -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-code"></i>
+                    Uso con JavaScript
+                </h2>
+                <p class="section-description">
+                    Crear botones dinámicamente con la clase Button
+                </p>
+            </div>
+            
+            <div id="dynamic-buttons"></div>
+            
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copiar</button>
+                <pre>// Crear botón dinámicamente
+const btn = btnComponent.create({
+    text: 'Nuevo Botón',
+    icon: 'fas fa-star',
+    variant: 'primary',
+    size: 'md',
+    type: 'solid',
+    onClick: () => alert('Click!')
+});
+
+document.body.appendChild(btn);
+
+// Activar loading
+btnComponent.setLoading(btn, true);
+setTimeout(() => btnComponent.setLoading(btn, false), 2000);</pre>
+            </div>
+            
+            <button class="btn btn-secondary btn-md" onclick="createDynamicButton()">
+                <i class="fas fa-magic"></i>
+                <span>Crear Botón Dinámico</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- FAB DEMO -->
+    <button class="btn btn-primary btn-fab" onclick="showToast('¡Botón FAB presionado!')">
+        <i class="fas fa-plus"></i>
+    </button>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Scripts -->
+    <script src="Button.js"></script>
+    <script>
+        // Copiar código
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Toggle loading
+        function toggleLoading(button) {
+            button.classList.add('loading');
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.disabled = false;
+                showToast('¡Operación completada!');
+            }, 2000);
+        }
+        
+        // Crear botón dinámico
+        function createDynamicButton() {
+            const container = document.getElementById('dynamic-buttons');
+            
+            const variants = ['primary', 'secondary', 'success', 'error', 'warning', 'info'];
+            const icons = ['fas fa-star', 'fas fa-heart', 'fas fa-bolt', 'fas fa-fire', 'fas fa-gem'];
+            const sizes = ['sm', 'md', 'lg'];
+            
+            const randomVariant = variants[Math.floor(Math.random() * variants.length)];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+            
+            const btn = btnComponent.create({
+                text: 'Botón Dinámico',
+                icon: randomIcon,
+                variant: randomVariant,
+                size: randomSize,
+                type: 'solid',
+                onClick: function() {
+                    showToast('¡Botón dinámico presionado!');
+                    btnComponent.setLoading(this, true);
+                    setTimeout(() => {
+                        btnComponent.setLoading(this, false);
+                    }, 1500);
+                }
+            });
+            
+            container.appendChild(btn);
+            container.style.display = 'flex';
+            container.style.flexWrap = 'wrap';
+            container.style.gap = '1rem';
+            container.style.marginBottom = '1rem';
+            
+            showToast('Botón creado dinámicamente');
+        }
+        
+        // Mostrar toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
