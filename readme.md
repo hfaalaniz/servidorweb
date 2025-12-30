@@ -30,6 +30,7 @@ Ideal para:
 
 1. Descarga la última release o la carpeta `publish`.
 2. Dentro de la carpeta `publish` coloca tus archivos estáticos en una subcarpeta llamada `miframe` (o cambia el nombre en `appsettings.json`).
+
 publish/
 ├── EnhancedStaticWebServer.exe
 ├── appsettings.json
@@ -37,6 +38,7 @@ publish/
 ├── index.html
 ├── assets/
 └── ... (tus archivos)
+
 3. (Opcional) Edita `appsettings.json` para cambiar puertos, usuario/contraseña, etc.
 4. Ejecuta doble clic en `EnhancedStaticWebServer.exe`.
 5. Abre el navegador:
@@ -49,17 +51,17 @@ publish/
 
 ```json
 {
-"ServerSettings": {
- "Port": 5000,
- "HttpsPort": 5001,               // 0 para deshabilitar HTTPS
- "WebRootPath": "miframe",        // Carpeta con tus archivos estáticos (relativa al ejecutable)
- "EnableDirectoryBrowsing": false, // true solo en desarrollo
- "EnableAuthentication": true,    // false para acceso público completo
- "BasicAuth": {
-   "Username": "admin",
-   "Password": "cambia_esta_contraseña"
+  "ServerSettings": {
+  "Port": 5000,
+  "HttpsPort": 5001,               // 0 para deshabilitar HTTPS
+  "WebRootPath": "miframe",        // Carpeta con tus archivos estáticos (relativa al ejecutable)
+  "EnableDirectoryBrowsing": false, // true solo en desarrollo
+  "EnableAuthentication": true,    // false para acceso público completo
+  "BasicAuth": {
+    "Username": "admin",
+    "Password": "cambia_esta_contraseña"
+   }
  }
-}
 }
 ```
 Compilar y publicar manualmente
@@ -71,10 +73,13 @@ cd EnhancedStaticWebServer
 # Edita EnhancedStaticWebServer.csproj y asegúrate de tener <TargetFramework>net8.0</TargetFramework>
 
 # Publicar como ejecutable único para Windows x64
+
 dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
 El ejecutable quedará en:
 bin\Release\net8.0\win-x64\publish\EnhancedStaticWebServer.exe
-Ejemplo de uso con tu proyecto de Tracking
+
+# Ejemplo de uso con tu proyecto de Tracking
 Este servidor fue creado específicamente para servir el Sistema de Tracking localmente:
 
 Coloca toda la carpeta de tu proyecto web en miframe.
