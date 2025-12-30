@@ -1,4 +1,4 @@
-# EnhancedStaticWebServer
+# Servidor web estático mejorado
 
 Un servidor web estático simple, ligero y portable desarrollado en **C# con ASP.NET Core**. Permite servir páginas web estáticas (HTML, CSS, JavaScript, imágenes, etc.) desde una carpeta local con un solo ejecutable.
 
