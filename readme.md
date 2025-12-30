@@ -90,6 +90,6 @@ Conexión a Supabase funciona sin problemas.
 ## Licencia
 MIT License – siéntete libre de usar, modificar y distribuir.
 ## Autor
-## Fabian Alaniz – Diciembre 2025
+## Fabian Alaniz – Diciembre 2025 - https://electronet.netlify.app
 ¡Disfruta de tu servidor web estático portable! 🚀#   s e r v i d o r _ w e b 
  
