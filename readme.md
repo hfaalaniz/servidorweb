@@ -80,12 +80,13 @@ dotnet publish -c Release -r win-x64 --self-contained true/p:PublishSingleFile=t
 ## El ejecutable quedará en:
 bin\Release\net8.0\win-x64\publish\EnhancedStaticWebServer.exe
 
-# Ejemplo de uso con tu proyecto de Tracking
+# Ejemplo de uso con mi proyecto de Tracking
 Este servidor fue creado específicamente para servir el Sistema de Tracking localmente:
 
-Coloca toda la carpeta de tu proyecto web en miframe.
+Coloca toda la carpeta de tu proyecto web en miframe, puede llamarse wwwroot eventualmente.
+
 Todos los componentes (button.js, card.js, modal.js, toast.js, tracking.js, etc.) se cargan correctamente.
-Conexión a Supabase funciona sin problemas.
+Conexión a Supabase funciona sin problemas. Debes crear las tablas correspondientes.
 
 ## Licencia
 MIT License – siéntete libre de usar, modificar y distribuir.
