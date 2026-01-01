@@ -220,7 +220,6 @@ const TrackingApp = {
     },
     
     // Cargar instancias activas
-    // Cargar instancias activas
     async cargarInstancias() {
         try {
             if (!this.supabase) {
